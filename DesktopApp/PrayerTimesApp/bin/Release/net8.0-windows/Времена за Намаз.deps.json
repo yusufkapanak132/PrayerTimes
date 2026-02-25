@@ -1,0 +1,41 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "Времена за Намаз/1.0.0": {
+        "dependencies": {
+          "System.Device.Location.Portable": "1.0.0"
+        },
+        "runtime": {
+          "Времена за Намаз.dll": {}
+        }
+      },
+      "System.Device.Location.Portable/1.0.0": {
+        "runtime": {
+          "lib/System.Device.Portable.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Времена за Намаз/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "System.Device.Location.Portable/1.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-VttxozXEleYcK2NiMo7xKMhDCCJbKtjnxcWDmqu703DeceLTI/9jopfEblyZKL0DWHGyOYLEan06yk6Hcv2cXw==",
+      "path": "system.device.location.portable/1.0.0",
+      "hashPath": "system.device.location.portable.1.0.0.nupkg.sha512"
+    }
+  }
+}

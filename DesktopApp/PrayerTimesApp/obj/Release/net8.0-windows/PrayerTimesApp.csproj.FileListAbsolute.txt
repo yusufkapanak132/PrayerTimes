@@ -1,0 +1,39 @@
+C:\Users\Administrator\source\repos\PrayerTimesApp\PrayerTimesApp\obj\Release\net8.0-windows\PrayerTimesApp.Form1.resources
+C:\Users\Administrator\source\repos\PrayerTimesApp\PrayerTimesApp\obj\Release\net8.0-windows\PrayerTimesApp.MainForm.resources
+C:\Users\Administrator\source\repos\PrayerTimesApp\PrayerTimesApp\obj\Release\net8.0-windows\PrayerTimesApp.Properties.Resources.resources
+C:\Users\Administrator\source\repos\PrayerTimesApp\PrayerTimesApp\obj\Release\net8.0-windows\PrayerTimesApp.csproj.GenerateResource.cache
+C:\Users\Administrator\source\repos\PrayerTimesApp\PrayerTimesApp\obj\Release\net8.0-windows\PrayerTimesApp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Administrator\source\repos\PrayerTimesApp\PrayerTimesApp\obj\Release\net8.0-windows\PrayerTimesApp.AssemblyInfoInputs.cache
+C:\Users\Administrator\source\repos\PrayerTimesApp\PrayerTimesApp\obj\Release\net8.0-windows\PrayerTimesApp.AssemblyInfo.cs
+C:\Users\Administrator\source\repos\PrayerTimesApp\PrayerTimesApp\obj\Release\net8.0-windows\PrayerTimesApp.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\source\repos\PrayerTimesApp\PrayerTimesApp\obj\Release\net8.0-windows\PrayerTimesApp.genruntimeconfig.cache
+C:\Users\Administrator\source\repos\PrayerTimesApp\PrayerTimesApp\bin\Release\net8.0-windows\Времена за Намаз.exe
+C:\Users\Administrator\source\repos\PrayerTimesApp\PrayerTimesApp\bin\Release\net8.0-windows\Времена за Намаз.deps.json
+C:\Users\Administrator\source\repos\PrayerTimesApp\PrayerTimesApp\bin\Release\net8.0-windows\Времена за Намаз.runtimeconfig.json
+C:\Users\Administrator\source\repos\PrayerTimesApp\PrayerTimesApp\bin\Release\net8.0-windows\Времена за Намаз.dll
+C:\Users\Administrator\source\repos\PrayerTimesApp\PrayerTimesApp\bin\Release\net8.0-windows\Времена за Намаз.pdb
+C:\Users\Administrator\source\repos\PrayerTimesApp\PrayerTimesApp\obj\Release\net8.0-windows\Времена за Намаз.dll
+C:\Users\Administrator\source\repos\PrayerTimesApp\PrayerTimesApp\obj\Release\net8.0-windows\refint\Времена за Намаз.dll
+C:\Users\Administrator\source\repos\PrayerTimesApp\PrayerTimesApp\obj\Release\net8.0-windows\Времена за Намаз.pdb
+C:\Users\Administrator\source\repos\PrayerTimesApp\PrayerTimesApp\obj\Release\net8.0-windows\ref\Времена за Намаз.dll
+C:\Users\pmg\Desktop\PrayerTimesApp\PrayerTimesApp\bin\Release\net8.0-windows\Времена за Намаз.exe
+C:\Users\pmg\Desktop\PrayerTimesApp\PrayerTimesApp\bin\Release\net8.0-windows\Времена за Намаз.deps.json
+C:\Users\pmg\Desktop\PrayerTimesApp\PrayerTimesApp\bin\Release\net8.0-windows\Времена за Намаз.runtimeconfig.json
+C:\Users\pmg\Desktop\PrayerTimesApp\PrayerTimesApp\bin\Release\net8.0-windows\Времена за Намаз.dll
+C:\Users\pmg\Desktop\PrayerTimesApp\PrayerTimesApp\bin\Release\net8.0-windows\Времена за Намаз.pdb
+C:\Users\pmg\Desktop\PrayerTimesApp\PrayerTimesApp\obj\Release\net8.0-windows\PrayerTimesApp.Form1.resources
+C:\Users\pmg\Desktop\PrayerTimesApp\PrayerTimesApp\obj\Release\net8.0-windows\PrayerTimesApp.MainForm.resources
+C:\Users\pmg\Desktop\PrayerTimesApp\PrayerTimesApp\obj\Release\net8.0-windows\PrayerTimesApp.Properties.Resources.resources
+C:\Users\pmg\Desktop\PrayerTimesApp\PrayerTimesApp\obj\Release\net8.0-windows\PrayerTimesApp.csproj.GenerateResource.cache
+C:\Users\pmg\Desktop\PrayerTimesApp\PrayerTimesApp\obj\Release\net8.0-windows\PrayerTimesApp.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\pmg\Desktop\PrayerTimesApp\PrayerTimesApp\obj\Release\net8.0-windows\PrayerTimesApp.AssemblyInfoInputs.cache
+C:\Users\pmg\Desktop\PrayerTimesApp\PrayerTimesApp\obj\Release\net8.0-windows\PrayerTimesApp.AssemblyInfo.cs
+C:\Users\pmg\Desktop\PrayerTimesApp\PrayerTimesApp\obj\Release\net8.0-windows\PrayerTimesApp.csproj.CoreCompileInputs.cache
+C:\Users\pmg\Desktop\PrayerTimesApp\PrayerTimesApp\obj\Release\net8.0-windows\Времена за Намаз.dll
+C:\Users\pmg\Desktop\PrayerTimesApp\PrayerTimesApp\obj\Release\net8.0-windows\refint\Времена за Намаз.dll
+C:\Users\pmg\Desktop\PrayerTimesApp\PrayerTimesApp\obj\Release\net8.0-windows\Времена за Намаз.pdb
+C:\Users\pmg\Desktop\PrayerTimesApp\PrayerTimesApp\obj\Release\net8.0-windows\PrayerTimesApp.genruntimeconfig.cache
+C:\Users\pmg\Desktop\PrayerTimesApp\PrayerTimesApp\obj\Release\net8.0-windows\ref\Времена за Намаз.dll
+C:\Users\pmg\Desktop\PrayerTimesApp\PrayerTimesApp\bin\Release\net8.0-windows\System.Device.Portable.dll
+C:\Users\pmg\Desktop\PrayerTimesApp\PrayerTimesApp\obj\Release\net8.0-windows\PrayerTimesApp.csproj.AssemblyReference.cache
+C:\Users\pmg\Desktop\PrayerTimesApp\PrayerTimesApp\obj\Release\net8.0-windows\PrayerTi.162BCB60.Up2Date

@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "CFORK1eX1kk=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Administrator\\AppData\\Roaming\\Microsoft\\Windows\\Network Shortcuts\\InnoSetup\\PrayerTimesApp\\PrayerTimesApp\\PrayerTimesApp.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Administrator\\.nuget\\packages\\system.speech\\10.0.1\\system.speech.10.0.1.nupkg.sha512",
+    "C:\\Users\\Administrator\\.nuget\\packages\\microsoft.windows.sdk.net.ref\\10.0.19041.57\\microsoft.windows.sdk.net.ref.10.0.19041.57.nupkg.sha512"
+  ],
+  "logs": []
+}

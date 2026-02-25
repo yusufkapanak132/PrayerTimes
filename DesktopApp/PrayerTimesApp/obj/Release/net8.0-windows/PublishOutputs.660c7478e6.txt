@@ -1,0 +1,5 @@
+C:\Users\Administrator\source\repos\PrayerTimesApp\PrayerTimesApp\bin\Release\net8.0-windows\publish\PrayerTimesApp.exe
+C:\Users\Administrator\source\repos\PrayerTimesApp\PrayerTimesApp\bin\Release\net8.0-windows\publish\PrayerTimesApp.dll
+C:\Users\Administrator\source\repos\PrayerTimesApp\PrayerTimesApp\bin\Release\net8.0-windows\publish\PrayerTimesApp.deps.json
+C:\Users\Administrator\source\repos\PrayerTimesApp\PrayerTimesApp\bin\Release\net8.0-windows\publish\PrayerTimesApp.runtimeconfig.json
+C:\Users\Administrator\source\repos\PrayerTimesApp\PrayerTimesApp\bin\Release\net8.0-windows\publish\PrayerTimesApp.pdb

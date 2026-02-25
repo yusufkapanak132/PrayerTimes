@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Времена за Намаз - Офлайн версия</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="manifest" href="./manifest.json">
+    <link rel="apple-touch-icon" href="./assets/icon-192x192.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <style>
+        /* Съществуващите стилове */
+        .offline-badge {
+            background: #ff6b6b;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-left: 10px;
+            display: inline-block;
+        }
+        .loading-indicator {
+            text-align: center;
+            padding: 20px;
+            color: #38b000;
+        }
+        .loading-indicator i {
+            font-size: 24px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .error-message {
+            color: #ff6b6b;
+            text-align: center;
+            padding: 20px;
+            font-size: 16px;
+        }
+        .offline-notice {
+            background: #ffa500;
+            color: #000;
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="main-body-class dark-mode">
+    <!-- Header - същия като в index.php -->
+    <header class="header container">
+        <a href="#" onclick="return false;" class="logo">
+            <i class="fas fa-mosque"></i>
+            <span>Времена за Намаз</span>
+            <span class="offline-badge"><i class="fas fa-wifi-slash"></i> Офлайн режим</span>
+        </a>
+        
+        <div class="offline-notice">
+            <i class="fas fa-info-circle"></i> 
+            Работите в офлайн режим. Данните са от локалния кеш.
+        </div>
+        
+        <!-- Езиков селектор -->
+        <div class="header-language">
+            <button class="lang-btn active" data-lang="bg">🇧🇬 Български</button>
+            <button class="lang-btn" data-lang="en">🇺🇸 English</button>
+            <button class="lang-btn" data-lang="tr">🇹🇷 Türkçe</button>
+            <button class="lang-btn" data-lang="ar">🇸🇦 العربية</button>
+        </div>
+        
+        <nav class="nav-links">
+            <a href="#" onclick="return false;" class="nav-link active">
+                <i class="fas fa-calendar-alt"></i> Месечен Преглед
+            </a>
+            <a href="#" onclick="return false;" class="nav-link">
+                <i class="fas fa-clock"></i> Живо Отброяване
+            </a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <!-- Избор на град -->
+        <div class="city-selector">
+            <label for="citySelect"><i class="fas fa-city"></i> Изберете град:</label>
+            <select id="citySelect" class="city-select">
+                <!-- Ще се попълни от JavaScript -->
+            </select>
+        </div>
+
+        <div class="main-content">
+            <!-- Лява страна - опростена -->
+            <aside class="side-panel">
+                <h2 class="panel-title"><i class="fas fa-info-circle"></i> Офлайн информация</h2>
+                <div class="download-card">
+                    <i class="fas fa-database"></i>
+                    <h3>Кеширани данни</h3>
+                    <p>Молитвените времена са записани локално</p>
+                    <div class="app-features">
+                        <span class="feature-tag">Работи без интернет</span>
+                        <span class="feature-tag">Кеширани данни</span>
+                    </div>
+                </div>
+                
+                <!-- Бърза статистика -->
+                <div class="quick-stats-panel">
+                    <h4><i class="fas fa-chart-pie"></i> Дневна статистика</h4>
+                    <div class="quick-stats-grid">
+                        <div class="quick-stat">
+                            <div class="quick-stat-value" id="quickFastingHours">--</div>
+                            <div class="quick-stat-label">часа постинг</div>
+                        </div>
+                        <div class="quick-stat">
+                            <div class="quick-stat-value" id="quickDaylightHours">--</div>
+                            <div class="quick-stat-label">продължителност на деня</div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Център: Таблица -->
+            <div class="prayer-table-container">
+                <div class="month-header">
+                    <div class="month-nav">
+                        <a href="#" class="month-btn" id="prevMonthBtn">
+                            <i class="fas fa-chevron-left"></i>
+                        </a>
+                        <span class="current-month" id="currentMonthDisplay"></span>
+                        <a href="#" class="month-btn" id="nextMonthBtn">
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                    </div>
+
+                    <div class="current-date">
+                        <i class="fas fa-calendar-day"></i>
+                        Днес: <span id="currentDateDisplay"></span>
+                        <span class="today-hijri" id="todayHijri"></span>
+                    </div>
+                </div>
+
+                <div class="loading-indicator" id="loadingIndicator">
+                    <i class="fas fa-spinner"></i> Зареждане на данни...
+                </div>
+
+                <div id="errorContainer" class="error-message" style="display: none;"></div>
+
+                <table class="prayer-table" id="prayerTable" style="display: none;">
+                    <thead>
+                        <tr>
+                            <th>Дата</th>
+                            <th>Ден</th>
+                            <th><i class="fa-regular fa-moon"></i> Зора</th>
+                            <th><i class="fa-regular fa-sun"></i> Изгрев</th>
+                            <th><i class="fas fa-sun"></i> Обяд</th>
+                            <th><i class="fas fa-cloud-sun"></i> Следобяд</th>
+                            <th><i class="fa-regular fa-moon"></i> Залез</th>
+                            <th><i class="fas fa-moon"></i> Нощ</th>
+                        </tr>
+                    </thead>
+                    <tbody id="prayerTableBody">
+                    </tbody>
+                </table>
+                
+                <div class="table-footer" id="tableFooter" style="display: none;">
+                    <div class="legend">
+                        <div class="legend-item">
+                            <span class="legend-color current-day"></span>
+                            Днешен ден
+                        </div>
+                        <div class="legend-item">
+                            <span class="legend-color friday-prayer"></span>
+                            Джума (петък)
+                        </div>
+                    </div>
+                    
+                    <div class="summary-stats">
+                        <div class="summary-stat">
+                            <strong>Общо дни:</strong> <span id="totalDays">--</span>
+                        </div>
+                        <div class="summary-stat">
+                            <strong>Джума дни:</strong> <span id="fridayCount">--</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Дясна страна - опростена -->
+            <aside class="side-panel">
+                <h2 class="panel-title"><i class="fas fa-wifi-slash"></i> Офлайн режим</h2>
+                <div class="download-card">
+                    <i class="fas fa-check-circle" style="color: #38b000;"></i>
+                    <h3>Работи офлайн</h3>
+                    <p>Молитвените времена са достъпни</p>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <footer class="footer container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4><i class="fas fa-info-circle"></i> Офлайн версия</h4>
+                <p>Работите в офлайн режим. Данните са от локалния кеш.</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Времена за Намаз - Офлайн версия</p>
+        </div>
+    </footer>
+
+    <script>
+
+        
+        // Global variables
+        let prayerData = null;
+        let currentMonth = new Date().getMonth() + 1;
+        let currentYear = 2026;
+        let selectedCity = 'София';
+        let allCities = [];
+        
+        const monthsInBulgarian = {
+            1: 'Януари', 2: 'Февруари', 3: 'Март', 4: 'Април',
+            5: 'Май', 6: 'Юни', 7: 'Юли', 8: 'Август',
+            9: 'Септември', 10: 'Октомври', 11: 'Ноември', 12: 'Декември'
+        };
+        
+        const prayerOrder = ["Зора", "Изгрев", "Обяд", "Следобяд", "Залез", "Нощ"];
+        
+        // Load prayer data from cache
+        async function loadPrayerData() {
+            try {
+                document.getElementById('loadingIndicator').style.display = 'block';
+                document.getElementById('errorContainer').style.display = 'none';
+                
+                const jsonPath = 'assets/all_prayer_times_2026.json';
+                
+                // ПЪРВО: Опитай от кеша
+                if ('caches' in window) {
+                    try {
+                        const cache = await caches.open('prayer-times-v8');
+                        const cachedResponse = await cache.match(jsonPath);
+                        
+                        if (cachedResponse) {
+                            prayerData = await cachedResponse.json();
+                            console.log('✅ Заредено от кеш');
+                            
+                            if (prayerData && Object.keys(prayerData).length > 0) {
+                                allCities = Object.keys(prayerData).sort();
+                                populateCitySelects();
+                                updateDisplay();
+                                
+                                document.getElementById('loadingIndicator').style.display = 'none';
+                                document.getElementById('prayerTable').style.display = 'table';
+                                document.getElementById('tableFooter').style.display = 'flex';
+                                
+                                initializeCharts();
+                                return;
+                            }
+                        }
+                    } catch (cacheError) {
+                        console.log('Кеш грешка:', cacheError);
+                    }
+                }
+                
+                // ВТОРО: Опитай localStorage
+                const backup = localStorage.getItem('prayerData_backup');
+                if (backup) {
+                    prayerData = JSON.parse(backup);
+                    console.log('✅ Заредено от localStorage');
+                    
+                    allCities = Object.keys(prayerData).sort();
+                    populateCitySelects();
+                    updateDisplay();
+                    
+                    document.getElementById('loadingIndicator').style.display = 'none';
+                    document.getElementById('prayerTable').style.display = 'table';
+                    document.getElementById('tableFooter').style.display = 'flex';
+                    
+                    initializeCharts();
+                    return;
+                }
+                
+                throw new Error('Няма кеширани данни');
+                
+            } catch (error) {
+                console.error('❌ Грешка:', error);
+                document.getElementById('loadingIndicator').style.display = 'none';
+                document.getElementById('errorContainer').style.display = 'block';
+                document.getElementById('errorContainer').innerHTML = `
+                    <i class="fas fa-exclamation-triangle"></i> 
+                    <strong>Няма кеширани данни!</strong><br>
+                    ${error.message}<br><br>
+                    <strong>За да работи офлайн:</strong>
+                    <ol style="text-align: left;">
+                        <li>Отворете приложението ВЕДНЪЖ с интернет</li>
+                        <li>Тогава данните ще се кешират</li>
+                        <li>След това ще работи и офлайн</li>
+                    </ol>
+                    <button onclick="location.reload()" style="background:#38b000; color:white; border:none; padding:10px 20px; border-radius:5px;">
+                        <i class="fas fa-sync-alt"></i> Опитай отново
+                    </button>
+                `;
+            }
+        }
+        
+        // Останалите функции (populateCitySelects, getDaysInMonth, formatDate, 
+        // getWeekday, formatTime, isToday, updateDisplay, updateQuickStats,
+        // initializeCharts, prevMonth, nextMonth) - КОПИРАЙТЕ ГИ ОТ ВАШИЯ КОД
+        
+        // Попълване на градовете
+        function populateCitySelects() {
+            const citySelect = document.getElementById('citySelect');
+            if (!citySelect) return;
+            
+            citySelect.innerHTML = '';
+            
+            allCities.forEach(city => {
+                const option = document.createElement('option');
+                option.value = city;
+                option.textContent = city;
+                if (city === selectedCity) option.selected = true;
+                citySelect.appendChild(option);
+            });
+        }
+        
+        // Брой дни в месеца
+        function getDaysInMonth(year, month) {
+            return new Date(year, month, 0).getDate();
+        }
+        
+        // Форматиране на дата
+        function formatDate(year, month, day) {
+            return `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+        }
+        
+        // Ден от седмицата
+        function getWeekday(dateStr) {
+            const date = new Date(dateStr + 'T12:00:00');
+            const weekdays = ['Неделя', 'Понеделник', 'Вторник', 'Сряда', 'Четвъртък', 'Петък', 'Събота'];
+            return weekdays[date.getDay()];
+        }
+        
+        // Форматиране на час
+        function formatTime(timeStr) {
+            if (!timeStr || timeStr === '--:--') return '--:--';
+            const parts = timeStr.split(':');
+            if (parts.length === 2) {
+                return `${String(parts[0]).padStart(2, '0')}:${String(parts[1]).padStart(2, '0')}`;
+            }
+            return timeStr;
+        }
+        
+        // Дали е днес
+        function isToday(dateStr) {
+            const today = new Date();
+            const todayStr = formatDate(today.getFullYear(), today.getMonth() + 1, today.getDate());
+            return dateStr === todayStr;
+        }
+        
+        // Обновяване на дисплея
+        function updateDisplay() {
+            if (!prayerData || !prayerData[selectedCity]) {
+                console.error('No data for city:', selectedCity);
+                return;
+            }
+            
+            document.getElementById('currentMonthDisplay').textContent = 
+                `${monthsInBulgarian[currentMonth]} ${currentYear}`;
+            
+            const today = new Date();
+            document.getElementById('currentDateDisplay').textContent = 
+                `${String(today.getDate()).padStart(2, '0')}.${String(today.getMonth() + 1).padStart(2, '0')}.${today.getFullYear()}`;
+            
+            document.getElementById('todayHijri').textContent = '(офлайн)';
+            
+            const daysInMonth = getDaysInMonth(currentYear, currentMonth);
+            let tableHtml = '';
+            let fridayCount = 0;
+            
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dateStr = formatDate(currentYear, currentMonth, day);
+                const dayData = prayerData[selectedCity]?.[dateStr];
+                
+                if (!dayData) continue;
+                
+                const weekday = getWeekday(dateStr);
+                const isFriday = weekday === 'Петък';
+                const isTodayFlag = isToday(dateStr);
+                
+                if (isFriday) fridayCount++;
+                
+                tableHtml += `<tr class="${isTodayFlag ? 'current-day' : ''}">`;
+                tableHtml += `<td class="date-cell">${String(day).padStart(2, '0')}.${String(currentMonth).padStart(2, '0')}`;
+                if (isTodayFlag) {
+                    tableHtml += `<span class="today-badge">ДНЕС</span>`;
+                }
+                tableHtml += `</td>`;
+                
+                tableHtml += `<td class="day-cell ${isFriday ? 'friday' : ''}">${weekday}`;
+                if (isFriday) {
+                    tableHtml += `<i class="fas fa-star" title="Джума ден"></i>`;
+                }
+                tableHtml += `</td>`;
+                
+                prayerOrder.forEach(prayer => {
+                    const prayerTime = dayData[prayer] || '--:--';
+                    const formattedTime = formatTime(prayerTime);
+                    
+                    let prayerClass = '';
+                    if (prayer === 'Обяд' && isFriday) prayerClass = 'friday-prayer';
+                    
+                    tableHtml += `<td class="prayer-time ${prayerClass}">${formattedTime}</td>`;
+                });
+                
+                tableHtml += `</tr>`;
+            }
+            
+            document.getElementById('prayerTableBody').innerHTML = tableHtml;
+            document.getElementById('totalDays').textContent = daysInMonth;
+            document.getElementById('fridayCount').textContent = fridayCount;
+            
+            updateQuickStats();
+        }
+        
+        // Бързи статистики
+        function updateQuickStats() {
+            const today = new Date();
+            const todayStr = formatDate(today.getFullYear(), today.getMonth() + 1, today.getDate());
+            const todayData = prayerData?.[selectedCity]?.[todayStr];
+            
+            if (todayData) {
+                const fajr = todayData['Зора'];
+                const maghrib = todayData['Залез'];
+                
+                if (fajr && maghrib) {
+                    const [fajrH, fajrM] = fajr.split(':').map(Number);
+                    const [maghribH, maghribM] = maghrib.split(':').map(Number);
+                    
+                    let fastingMinutes = (maghribH * 60 + maghribM) - (fajrH * 60 + fajrM);
+                    if (fastingMinutes < 0) fastingMinutes += 24 * 60;
+                    
+                    const fastingHours = Math.floor(fastingMinutes / 60);
+                    const fastingMins = fastingMinutes % 60;
+                    
+                    document.getElementById('quickFastingHours').textContent = `${fastingHours}ч ${fastingMins}м`;
+                    
+                    const sunrise = todayData['Изгрев'];
+                    const sunset = todayData['Залез'];
+                    
+                    if (sunrise && sunset) {
+                        const [sunriseH, sunriseM] = sunrise.split(':').map(Number);
+                        const [sunsetH, sunsetM] = sunset.split(':').map(Number);
+                        
+                        let daylightMinutes = (sunsetH * 60 + sunsetM) - (sunriseH * 60 + sunriseM);
+                        if (daylightMinutes < 0) daylightMinutes += 24 * 60;
+                        
+                        const daylightHours = Math.floor(daylightMinutes / 60);
+                        const daylightMins = daylightMinutes % 60;
+                        
+                        document.getElementById('quickDaylightHours').textContent = `${daylightHours}ч ${daylightMins}м`;
+                    }
+                }
+            } else {
+                document.getElementById('quickFastingHours').textContent = '--:--';
+                document.getElementById('quickDaylightHours').textContent = '--:--';
+            }
+        }
+        
+        // Графики
+        function initializeCharts() {
+            const ctx1 = document.getElementById('dayDistributionChart')?.getContext('2d');
+            if (ctx1) {
+                new Chart(ctx1, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Ден', 'Нощ'],
+                        datasets: [{
+                            data: [12, 12],
+                            backgroundColor: ['#ffd966', '#2b2b2b'],
+                            borderColor: ['#38b000', '#38b000']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: { labels: { color: '#fff' } }
+                        }
+                    }
+                });
+            }
+        }
+        
+        // Навигация
+        function prevMonth(e) {
+            e.preventDefault();
+            if (currentMonth === 1) {
+                currentMonth = 12;
+                currentYear--;
+            } else {
+                currentMonth--;
+            }
+            updateDisplay();
+        }
+        
+        function nextMonth(e) {
+            e.preventDefault();
+            if (currentMonth === 12) {
+                currentMonth = 1;
+                currentYear++;
+            } else {
+                currentMonth++;
+            }
+            updateDisplay();
+        }
+        
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', function() {
+            // Event listeners
+            document.getElementById('citySelect')?.addEventListener('change', function(e) {
+                selectedCity = e.target.value;
+                updateDisplay();
+            });
+            
+            document.getElementById('prevMonthBtn')?.addEventListener('click', prevMonth);
+            document.getElementById('nextMonthBtn')?.addEventListener('click', nextMonth);
+            
+            // Зареждане на данните
+            loadPrayerData();
+            
+            // Езикови бутони
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    alert(`Езикът е сменен на: ${this.dataset.lang} (офлайн режим)`);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

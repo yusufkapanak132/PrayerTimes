@@ -1,0 +1,103 @@
+{
+  "expo": {
+    "name": "Времена за Намаз",
+    "slug": "PrayerTimes",
+    "version": "1.0.3",
+    "orientation": "portrait",
+
+    "icon": "./assets/images/PrayerTimesIcon.png",
+
+    "scheme": "myapp",
+    "userInterfaceStyle": "automatic",
+
+    "newArchEnabled": false,
+
+    "android": {
+      "versionCode": 6,
+      "package": "com.thedevil131.PrayerTimes",
+      "label": "Времена за Намаз",
+
+      "icon": "./assets/images/PrayerTimesIcon.png",
+
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/PrayerTimesIcon.png",
+        "backgroundColor": "#ffffff"
+      },
+
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "RECEIVE_BOOT_COMPLETED",
+        "SCHEDULE_EXACT_ALARM",
+        "REQUEST_IGNORE_BATTERY_OPTIMIZATIONS"
+      ]
+    },
+
+    "ios": {
+      "bundleIdentifier": "com.thedevil131.PrayerTimes",
+      "supportsTablet": true,
+
+      "icon": "./assets/images/PrayerTimesIcon.png",
+
+      "infoPlist": {
+        "CFBundleDisplayName": "Времена за Намаз",
+        "ITSAppUsesNonExemptEncryption": false,
+        "NSLocationWhenInUseUsageDescription": "Приложението използва местоположението за автоматично определяне на най-близкия град за точни молитвени времена.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "Приложението използва местоположението за автоматично определяне на най-близкия град за точни молитвени времена.",
+        "NSLocationAlwaysUsageDescription": "Приложението използва местоположението за автоматично определяне на най-близкия град за точни молитвени времена."
+      }
+    },
+
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/images/PrayerTimesIcon.png"
+    },
+
+    "plugins": [
+      "expo-router",
+
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/PrayerTimesIcon.png",
+          "resizeMode": "contain",
+          "backgroundColor": "#ffffff"
+        }
+      ],
+
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "compileSdkVersion": 35,
+            "targetSdkVersion": 35,
+            "gradlePluginVersion": "7.4.2",
+            "kotlinVersion": "1.9.24"
+          }
+        }
+      ],
+
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Позволява $(PRODUCT_NAME) да използва вашето местоположение за автоматично определяне на най-близкия град и точни молитвени времена.",
+          "locationWhenInUsePermission": "Позволява $(PRODUCT_NAME) да използва вашето местоположението за автоматично определяне на най-близкия град."
+        }
+      ]
+    ],
+
+    "experiments": {
+      "typedRoutes": true
+    },
+
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "8d98e93a-d219-4af3-9cc8-7388bded0bcc"
+      }
+    }
+  }
+}
