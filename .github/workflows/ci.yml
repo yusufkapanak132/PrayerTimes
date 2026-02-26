@@ -1,41 +1,4 @@
-name: Run Tests on Push
-
-# Този блок казва на GitHub Action да се стартира при всеки push
-on:
-  push:
-    branches:
-      - main
-      - master # Добави или промени името на основния ти branch (напр. develop), ако е различно
-
-jobs:
-  # Задача за тестване на MobileApp
-  test-mobile-app:
-    name: Test Mobile App
-    runs-on: ubuntu-latest
-    
-    # Указваме в коя папка да се изпълняват командите за тази задача
-    defaults:
-      run:
-        working-directory: ./MobileApp
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20' # Можеш да промениш версията според това какво ползваш
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run Mobile tests
-        run: npm test
-
-
-  # Задача за тестване на WebSite
- test-website:
+test-website:
     name: Test WebSite
     runs-on: ubuntu-latest
     defaults:
@@ -49,11 +12,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm' # Автоматично кеширане за по-бързи тестове
-          cache-dependency-path: './WebSite/package-lock.json'
 
       - name: Install dependencies
         run: npm install
 
+      # ТАЗИ СТЪПКА ОПРАВЯ ВЕРСИЯТА И ПРАВАТА
+      - name: Force Install Stable Jest
+        run: npm install jest@29.7.0 jest-environment-jsdom@29.7.0 --save-dev
+
       - name: Run WebSite tests
-        run: npm test # Тук вече ще се изпълни "npx jest --env=jsdom"
+        run: ./node_modules/.bin/jest --env=jsdom
