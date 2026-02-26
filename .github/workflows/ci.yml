@@ -1,12 +1,13 @@
-name: Run Tests on Push
+name: Run All Project Tests
 
 on:
   push:
     branches: [main, master]
 
 jobs:
+  # 1. МОБИЛНО ПРИЛОЖЕНИЕ (Node.js/Expo)
   test-mobile-app:
-    name: Test Mobile App
+    name: Mobile App Tests
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -19,8 +20,9 @@ jobs:
       - run: npm install
       - run: npm test
 
+  # 2. УЕБСАЙТ (Node.js/Jest)
   test-website:
-    name: Test WebSite
+    name: WebSite Tests
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -30,12 +32,26 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      
-      - name: Install dependencies
-        run: npm install
-
+      - run: npm install
       - name: Force Install Stable Jest
         run: npm install jest@29.7.0 jest-environment-jsdom@29.7.0 --save-dev
+      - run: npx jest --env=jsdom
 
-      - name: Run WebSite tests
-        run: npx jest --env=jsdom
+  # 3. ДЕСКТОП ПРИЛОЖЕНИЕ (C# / .NET 8)
+  test-desktop-app:
+    name: Desktop App Tests (C#)
+    runs-on: windows-latest # Задължително за Windows-specific SDK
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore dependencies
+        run: dotnet restore ./DesktopApp/PrayerTimesApp.sln
+
+      - name: Build and Run C# Tests
+        run: dotnet test ./DesktopApp/PrayerTimesApp.sln --configuration Release --no-restore --verbosity normal
