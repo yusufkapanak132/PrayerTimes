@@ -35,15 +35,12 @@ jobs:
 
 
   # Задача за тестване на WebSite
-  test-website:
+ test-website:
     name: Test WebSite
     runs-on: ubuntu-latest
-    
-    # Указваме в коя папка да се изпълняват командите за тази задача
     defaults:
       run:
         working-directory: ./WebSite
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -52,9 +49,11 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm' # Автоматично кеширане за по-бързи тестове
+          cache-dependency-path: './WebSite/package-lock.json'
 
       - name: Install dependencies
         run: npm install
 
       - name: Run WebSite tests
-        run: npm test
+        run: npm test # Тук вече ще се изпълни "npx jest --env=jsdom"
