@@ -46,7 +46,7 @@ static void maybe_reset_daily_counter(void) {
         tm_now.tm_hour = 0; tm_now.tm_min = 0; tm_now.tm_sec = 0;
         s_last_midnight = mktime(&tm_now);
     }
-    // Тук можеш да добавиш логика за нулиране в полунощ
+
 }
 
 /* --- I2C Register Helper --- */
@@ -104,21 +104,20 @@ static esp_err_t imu_setup_irq(void) {
     gpio_config_t io = {
         .pin_bit_mask = 1ULL << IMU_IRQ_GPIO,
         .mode = GPIO_MODE_INPUT,
-        .pull_up_en = GPIO_PULLUP_ENABLE, // Важно! Държим го високо, сензорът го дърпа ниско
+        .pull_up_en = GPIO_PULLUP_ENABLE, 
         .pull_down_en = GPIO_PULLDOWN_DISABLE,
         .intr_type = GPIO_INTR_NEGEDGE,   // Реагираме при спад (High -> Low)
     };
     ESP_ERROR_CHECK(gpio_config(&io));
 
-    // Опитваме да инсталираме сървиса. Ако тъчът вече го е направил, игнорираме грешката.
+    
     esp_err_t err = gpio_install_isr_service(0);
     if (err != ESP_OK && err != ESP_ERR_INVALID_STATE) {
         ESP_LOGE(TAG, "ISR Install failed: %d", err);
     }
 
     gpio_isr_handler_add(IMU_IRQ_GPIO, imu_irq_isr, NULL);
-    // Засега не включваме прекъсването, ще го пуснем само при сън
-    // gpio_intr_enable(IMU_IRQ_GPIO); 
+   
     return ESP_OK;
 }
 
@@ -126,7 +125,7 @@ static bool imu_try_init(uint8_t addr) {
     i2c_master_bus_handle_t bus = bsp_i2c_get_handle();
     if (!bus) return false;
     
-    // Инициализация чрез библиотеката
+  
     if (qmi8658_init(&s_imu, bus, addr) != ESP_OK) return false;
     
     // Начални настройки за крачкомер
@@ -148,13 +147,13 @@ bool sensors_prepare_for_sleep(void)
 
     // 1. НАСТРОЙКА НА СЕНЗОРА (QMI8658)
     // ---------------------------------------------------------
-    // CTRL1: Enable INT1, Active Low, Open Drain
-    qmi8658_write_reg(0x02, 0x74); // 0x74 = Serial/AutoInc + INT1_EN + ActiveLow + OpenDrain
+  
+    qmi8658_write_reg(0x02, 0x74); 
     
-    // CTRL7: Enable Accel only
+    
     qmi8658_write_reg(0x08, 0x01);
 
-    // CTRL2: Accel 2g, 62.5Hz (Ниска честота за пестене на ток)
+    
     qmi8658_write_reg(0x03, 0x05); 
     
     // CTRL5: Disable LPF
