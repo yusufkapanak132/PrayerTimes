@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "sw.js",
   "scripts": {
-    "test": "jest --env=jsdom"
+    "test": "npx jest --env=jsdom"
   },
   "keywords": [],
   "author": "",
