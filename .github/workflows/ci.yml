@@ -1,24 +1,41 @@
-test-website:
+name: Run Tests on Push
+
+on:
+  push:
+    branches: [main, master]
+
+jobs:
+  test-mobile-app:
+    name: Test Mobile App
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./MobileApp
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - run: npm install
+      - run: npm test
+
+  test-website:
     name: Test WebSite
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ./WebSite
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '20'
-
+      
       - name: Install dependencies
         run: npm install
 
-      # ТАЗИ СТЪПКА ОПРАВЯ ВЕРСИЯТА И ПРАВАТА
       - name: Force Install Stable Jest
         run: npm install jest@29.7.0 jest-environment-jsdom@29.7.0 --save-dev
 
       - name: Run WebSite tests
-        run: ./node_modules/.bin/jest --env=jsdom
+        run: npx jest --env=jsdom
