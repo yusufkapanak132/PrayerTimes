@@ -1,33 +1,60 @@
-name: Run Tests
+name: Run Tests on Push
 
+# Този блок казва на GitHub Action да се стартира при всеки push
 on:
   push:
     branches:
       - main
-      - master
-  pull_request:
+      - master # Добави или промени името на основния ти branch (напр. develop), ако е различно
 
 jobs:
-  test:
+  # Задача за тестване на MobileApp
+  test-mobile-app:
+    name: Test Mobile App
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        folder: [MobileApp, WebSite]
+    
+    # Указваме в коя папка да се изпълняват командите за тази задача
+    defaults:
+      run:
+        working-directory: ./MobileApp
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 18
+          node-version: '20' # Можеш да промениш версията според това какво ползваш
 
       - name: Install dependencies
         run: npm install
-        working-directory: ${{ matrix.folder }}
 
-      - name: Run tests
+      - name: Run Mobile tests
         run: npm test
-        working-directory: ${{ matrix.folder }}
+
+
+  # Задача за тестване на WebSite
+  test-website:
+    name: Test WebSite
+    runs-on: ubuntu-latest
+    
+    # Указваме в коя папка да се изпълняват командите за тази задача
+    defaults:
+      run:
+        working-directory: ./WebSite
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run WebSite tests
+        run: npm test
