@@ -1,50 +1,28 @@
-# Welcome to your Expo app 👋
+# 📱 Мобилно приложение (Android & iOS)
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+Мобилното приложение предоставя максимална прецизност и автономия в джоба на потребителя. Основният му приоритет е надеждната работа във фонов режим (background execution), за да гарантира, че известията за молитви никога няма да закъснеят.
 
-## Get started
+---
 
-1. Install dependencies
+## ✨ Ключови функционалности
+* **100% Офлайн изчисления:** Времената се генерират локално на телефона, без нужда от интернет връзка.
+* **Смарт известия (Push Notifications):** Напълно персонализируеми аларми (напр. "10 минути преди изгрев").
+* **Гласово четене:** Интегриран Text-to-Speech модул за хора с увредено зрение.
+* **Автоматично локализиране:** Обновяване на времената при смяна на населеното място.
 
-   ```bash
-   npm install
-   ```
+## 📸 Галерия
 
-2. Start the app
+**Главен екран с времена**
+![Мобилно приложение](../assets/1.jpg)
 
-   ```bash
-    npx expo start
-   ```
+**Персонализирани Настройки за известия**
+![Настройки](../assets/9.jpg)
 
-In the output, you'll find options to open the app in a
+**Системни Push Нотификации**
+![Нотификации](../assets/10.jpg)
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+---
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
-
-## Learn more
-
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## 🛠 Технически детайли
+* **Фреймуърк:** React Native / Expo (или посочи ако е нативно Android/Java)
+* **Background Tasks:** Оптимизирано управление на системните ресурси за избягване на "убиване" на процеса от OS (Doze mode на Android).
