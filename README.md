@@ -37,10 +37,10 @@
 
 Проектът е разделен на 4 основни директории (модули), всеки от които функционира независимо:
 
-* `Web-PWA/` - Уеб платформа, PWA, Е-магазин, REST API и Админ панел
-* `Mobile-App/` - Мобилно приложение за Android & iOS (React Native)
-* `Desktop-App/` - Десктоп приложение за Windows работещо във фонов режим
-* `Smartwatch/` - C/C++ фърмуер за специализиран водоустойчив смарт часовник
+* `WebSite/` - Уеб платформа, PWA, Е-магазин, REST API и Админ панел
+* `MobileApp/` - Мобилно приложение за Android & iOS (React Native)
+* `DesktopApp/` - Десктоп приложение за Windows работещо във фонов режим
+* `S3Watch/` - C/C++ фърмуер за специализиран водоустойчив смарт часовник
 
 ---
 
@@ -68,8 +68,8 @@
 Архитектурата следва стриктен 3-слоен модел: **Frontend → REST API → JSON/SQL хранилище**.
 
 * **Мобилни приложения:** React Native, JavaScript
-* **Уеб платформа & PWA:** HTML, CSS, JavaScript, PHP, Service Workers
-* **Десктоп приложение:** C#, SQL
+* **Уеб платформа & PWA:** HTML, CSS, JavaScript, PHP, Service Workers, SQL
+* **Десктоп приложение:** C#
 * **Смарт часовник (Ниско ниво):** C, C++ (Оптимизация за QMI8658 6-Axis IMU и пестене на батерия)
 * **Бекенд & API:** PHP, Python, SQL, RESTful API (HTTP GET JSON)
 * **Тестване и DevOps:** Git, GitHub Actions, Jest (Unit Testing)
